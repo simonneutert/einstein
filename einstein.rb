@@ -13,20 +13,20 @@
 @drinks        = [:beer, :water, :tea, :milk, :coffee].shuffle.permutation
 @pets          = [:birds, :cats, :horses, :fish, :dogs].shuffle.permutation
 
-def next_to?(set_a, val_a, set_b, val_b)
-  left_of?(set_a, val_a, set_b, val_b) ||
-  left_of?(set_b, val_b, set_a, val_a)
-end
- 
 def left_of?(set_a, val_a, set_b, val_b)
-  (0..4).any? do |i|
+  (0..4).any? do |i| # da 5 Auswahlmöglichkeiten
     set_a[i]   == val_a &&
     set_b[i+1] == val_b
   end
 end
 
+def next_to?(set_a, val_a, set_b, val_b)
+  left_of?(set_a, val_a, set_b, val_b) ||
+  left_of?(set_b, val_b, set_a, val_a)
+end
+
 def implies?(set_a, val_a, set_b, val_b)
-  (0..4).any? do |i|
+  (0..4).any? do |i| # da 5 Auswahlmöglichkeiten
     set_a[i] == val_a &&
     set_b[i] == val_b
   end
@@ -44,7 +44,7 @@ def solve
       next unless next_to?(nationalities, :norwegian, colors, :blue)
       @pets.each do |pets|
         i += 1
-        next unless implies?(nationalities, :swedish, pets, :dogs) 
+        next unless implies?(nationalities, :swedish, pets, :dogs)
         @drinks.each do |drinks|
           i += 1
           next unless drinks[2] == :milk
@@ -85,4 +85,3 @@ for i in (0..4)
 end
 
 puts "\n"
-
